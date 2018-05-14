@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout/header::head"></head>
+  <body>
+  <th:block th:include="layout/navbar"/>
+    <div th:if="${not #lists.isEmpty(courses)}">
+      <h2>Courses</h2>
+      <table class="table table-striped">
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th/>
+          <th/>
+        </tr>
+        <tr th:each="course : ${courses}">
+          <td th:text="${#numbers.formatInteger(course.id,1)}">Id</td>
+          <td th:text="${course.name}">Name</td>
+          <td th:text="${course.description}">Description</td>
+          <td><a th:href="${'/topics/' + topicId + '/courses/' + course.id + '/edit/'}" class="btn btn-default">Edit</a></td>
+          <td>
+            <form action="#" th:action="${'/topics/' + topicId + '/courses/' + course.id + '/delete/'}" method="post">
+              <input type="submit" value="Delete" class="btn btn-danger">
+            </form>
+          </td>
+        </tr>
+      </table>
+      <a type="button" class="btn" href="#" th:href="${'/topics/' + topicId + '/courses/add'}">Create Course</a>
+    </div>
+    <div th:if="${#lists.isEmpty(courses)}">
+      <p><a href="#" th:href="${'/topics/' + topicId + '/courses/add'}">Please create a course</a></p>
+    </div>
+  </body>
+</html>

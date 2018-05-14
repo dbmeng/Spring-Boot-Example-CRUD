@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout/header::head"></head>
+  <body>
+    <th:block th:include="layout/navbar"/>
+    <form action="#" th:action="${'/topics/edit/' + topic.id}" th:object="${topic}" method="post">
+      <div class="container">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="nameLabel">Name</label>
+            <input type="text" th:class="${#fields.hasErrors('name')} ? 'form-control is-invalid col-md-6' : 'form-control col-md-6'" id="nameLabel" placeholder="Name Example" th:field="*{name}" th:value="${topic.name}">
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback">Name Error</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="descriptionLabel">Description</label>
+            <input type="text" th:class="${#fields.hasErrors('description')} ? 'form-control is-invalid col-md-6' : 'form-control col-md-6'" id="descriptionLabel" placeholder="Description example" th:field="*{description}" th:value="${topic.description}">
+            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-feedback">Description Error</span>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+        <button type="submit" class="btn btn-secondary" name="cancel">Cancel</button>
+      </div>
+    </form>
+  </body>
+</html>

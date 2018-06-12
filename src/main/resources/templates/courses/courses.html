@@ -11,13 +11,17 @@
           <th>Id</th>
           <th>Name</th>
           <th>Description</th>
+          <th>Course Date</th>
+          <th>Course Phone Number</th>
           <th/>
           <th/>
         </tr>
         <tr th:each="course : ${courses}">
           <td th:text="${#numbers.formatInteger(course.id,1)}">Id</td>
-          <td th:text="${course.name}">Name</td>
-          <td th:text="${course.description}">Description</td>
+          <td th:text="${course.courseName}">Name</td>
+          <td th:text="${course.courseDescription}">Description</td>
+          <td th:text="${#dates.format(course.courseDate,'dd-MMM-yyyy')}"></td>
+          <td th:text="${course.coursePhoneNumber}"></td>
           <td><a th:href="${'/topics/' + topicId + '/courses/' + course.id + '/edit/'}" class="btn btn-default">Edit</a></td>
           <td>
             <form action="#" th:action="${'/topics/' + topicId + '/courses/' + course.id + '/delete/'}" method="post">

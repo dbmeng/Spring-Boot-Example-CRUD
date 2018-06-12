@@ -8,15 +8,30 @@
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="nameLabel">Name</label>
-            <input type="text" th:class="${#fields.hasErrors('name')} ? 'form-control is-invalid col-md-6' : 'form-control col-md-6'" id="nameLabel" placeholder="Name Example" th:field="*{name}">
-            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback">Name Error</span>
+            <input type="text" th:class="${#fields.hasErrors('courseName')} ? 'form-control is-invalid col-md-6' : 'form-control col-md-6'" id="nameLabel" placeholder="Name Example" th:field="*{courseName}">
+            <span th:if="${#fields.hasErrors('courseName')}" th:errors="*{courseName}" class="invalid-feedback">Name Error</span>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="descriptionLabel">Description</label>
-            <input type="text" th:class="${#fields.hasErrors('description')} ? 'form-control is-invalid col-md-6' : 'form-control col-md-6'" id="descriptionLabel" placeholder="Description example" th:field="*{description}">
-            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-feedback">Description Error</span>
+            <input type="text" th:class="${#fields.hasErrors('courseDescription')} ? 'form-control is-invalid col-md-6' : 'form-control col-md-6'" id="descriptionLabel" placeholder="Description example" th:field="*{courseDescription}">
+            <span th:if="${#fields.hasErrors('courseDescription')}" th:errors="*{courseDescription}" class="invalid-feedback">Description Error</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="courseDateLabel">Course Date</label>
+            <input type="date" th:class="${#fields.hasErrors('courseDate')} ? 'form-control is-invalid col-md-6' : 'form-control col-md-6'" id="courseDateLabel" th:field="*{courseDate}">
+            <span th:if="${#fields.hasErrors('courseDate')}" th:errors="*{courseDate}" class="invalid-feedback">Course Date Error</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="coursePhoneNumberLabel">Course Phone Number</label>
+            <input type="text" th:class="${#fields.hasErrors('coursePhoneNumber')} ? 'form-control is-invalid col-md-6' : 'form-control col-md-6'" id="coursePhoneNumberLabel" th:field="*{coursePhoneNumber}">
+            <small class="form-text text-muted">Enter a phone number customers can contact for course information</small>
+            <span th:if="${#fields.hasErrors('coursePhoneNumber')}" th:errors="*{coursePhoneNumber}" class="invalid-feedback">Course Phone Number Error</span>
           </div>
         </div>
         <button type="submit" class="btn btn-primary" name="submit">Submit</button>

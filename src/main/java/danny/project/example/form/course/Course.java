@@ -2,8 +2,11 @@ package danny.project.example.form.course;
 
 import danny.project.example.form.Enums.ColumnStatus;
 import danny.project.example.form.topic.Topic;
+import danny.project.example.form.validation.Validations;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,81 +18,106 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="COURSE")
 public class Course {
 
-	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO, generator="course_id_sequence")
-	@SequenceGenerator(name="course_id_sequence", sequenceName = "course_id_seq", allocationSize=1)
-	private Integer id;
+  @Id
+  @GeneratedValue(strategy= GenerationType.AUTO, generator="course_id_sequence")
+  @SequenceGenerator(name="course_id_sequence", sequenceName = "course_id_seq", allocationSize=1)
+  private Integer id;
 
-	@Column(name = "name", nullable = false)
-	@NotEmpty(message = "Please enter a name")
-	private String name;
+  @Column(name = "name", nullable = false)
+  @NotEmpty(message = "Please enter a course name")
+  private String courseName;
 
-	@Column(name = "description", nullable = false)
-	@NotEmpty(message = "Please enter a description")
-	private String description;
+  @Column(name = "description", nullable = false)
+  @NotEmpty(message = "Please enter a course description")
+  private String courseDescription;
 
-	@ManyToOne
-	@JoinColumn(name = "topic_id")
-	private Topic topic;
+  @ManyToOne
+  @JoinColumn(name = "topic_id")
+  private Topic topic;
 
-	@Column(name="status", nullable = false)
+  @Column(name="status", nullable = false)
   @Enumerated(EnumType.STRING)
-	private ColumnStatus status;
+  private ColumnStatus status;
+
+  @Column(name="course_date", nullable = false)
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  @FutureOrPresent(message = "Course date cannot be in the past")
+  @NotNull(message = "Please enter a course date")
+  private Date courseDate;
 
   @Column(name = "updated_datetime", nullable = false)
   private Timestamp updatedDatetime;
 
-	public Course() {};
+  @Column(name = "course_phone_number", nullable = false)
+  @Validations.ValidatePhoneNumber
+  private String coursePhoneNumber;
 
-	public Course(Integer id, String name, String description, Topic topic, ColumnStatus status, Timestamp updatedDatetime) {
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.topic = topic;
-		this.status = status;
-		this.updatedDatetime = updatedDatetime;
-	}
+  public Course() {};
 
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
+  public Course(Integer id, String courseName, String courseDescription, Topic topic, ColumnStatus status, Date courseDate, Timestamp updatedDatetime, String coursePhoneNumber) {
+    this.id = id;
+    this.courseName = courseName;
+    this.courseDescription = courseDescription;
+    this.topic = topic;
+    this.status = status;
+    this.courseDate = courseDate;
+    this.updatedDatetime = updatedDatetime;
+    this.coursePhoneNumber = coursePhoneNumber;
+  }
 
-	public Topic getTopic(Integer topicId) {
-		return topic;
-	}
+  public Integer getId() {
+    return id;
+  }
 
-	public void setTopic(Topic topic) {
-		this.topic = topic;
-	}
+  public void setId(Integer id) {
+    this.id = id;
+  }
+  public String getCourseName() {
+    return courseName;
+  }
+  public void setCourseName(String courseName) {
+    this.courseName = courseName;
+  }
 
-	public ColumnStatus getStatus() {
-		return status;
-	}
+  public String getCourseDescription() {
+    return courseDescription;
+  }
 
-	public void setStatus(ColumnStatus status) {
-		this.status = status;
-	}
+  public void setCourseDescription(String courseDescription) {
+    this.courseDescription = courseDescription;
+  }
+
+  public Topic getTopic(Integer topicId) {
+    return topic;
+  }
+
+  public void setTopic(Topic topic) {
+    this.topic = topic;
+  }
+
+  public ColumnStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(ColumnStatus status) {
+    this.status = status;
+  }
+
+  public Date getCourseDate() {
+    return courseDate;
+  }
+
+  public void setCourseDate(Date courseDate) {
+    this.courseDate = courseDate;
+  }
 
   public Timestamp getUpdatedDatetime() {
     return updatedDatetime;
@@ -97,5 +125,13 @@ public class Course {
 
   public void setUpdatedDatetime(Timestamp updatedDatetime) {
     this.updatedDatetime = updatedDatetime;
+  }
+
+  public String getCoursePhoneNumber() {
+    return coursePhoneNumber;
+  }
+
+  public void setCoursePhoneNumber(String coursePhoneNumber) {
+    this.coursePhoneNumber = coursePhoneNumber;
   }
 }

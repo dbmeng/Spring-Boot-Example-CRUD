@@ -1,5 +1,6 @@
 package danny.project.example.form.course;
 
+
 import danny.project.example.form.Enums.ColumnStatus;
 import danny.project.example.form.topic.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,13 +57,14 @@ public class CourseController {
 	}
 
 	@PostMapping(value = "/{topicId}/courses/add", params = "submit")
-	public String saveNewCourse(@Valid @ModelAttribute("course") Course course, @PathVariable Integer topicId, BindingResult bindingResult) {
+	public String saveNewCourse(@PathVariable Integer topicId, @Valid @ModelAttribute("course") Course course, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()){
-			return "topics/{topicId}/courses/add";
+			return "courses/add";
 		}
 
 	  course.setTopic(topicService.getTopic(topicId));
+		course.setUpdatedDatetime(Timestamp.valueOf(LocalDateTime.now()));
 		courseService.addCourse(course);
 		return "redirect:/topics/" + topicId + "/courses";
 	}
@@ -75,17 +77,17 @@ public class CourseController {
   @GetMapping("/{topicId}/courses/{courseId}/edit")
   public String editExistingCourse(Model model, @PathVariable Integer topicId, @PathVariable Integer courseId){
     Course course = courseService.getCourse(courseId);
-    model.addAttribute("title", "Edit Course: " + course.getName());
+    model.addAttribute("title", "Edit Course: " + course.getCourseName());
     model.addAttribute("course", course);
     model.addAttribute("topicId", topicId);
     return "courses/edit";
   }
 
   @PostMapping(value = "/{topicId}/courses/{courseId}/edit", params = "submit")
-  public String updateExistingCourse(@ModelAttribute("course") Course course,	@PathVariable Integer topicId, SessionStatus sessionStatus,	BindingResult bindingResult) {
+  public String updateExistingCourse(@PathVariable Integer topicId, SessionStatus sessionStatus, @Valid @ModelAttribute("course") Course course, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()){
-			return "topics/{topicId}/courses/{courseId}/edit";
+			return "courses/edit";
 		}
 
 		course.setUpdatedDatetime(Timestamp.valueOf(LocalDateTime.now()));

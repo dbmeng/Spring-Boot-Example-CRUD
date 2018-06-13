@@ -1,12 +1,14 @@
 package danny.project.example.form.validation;
 
+import danny.project.example.form.validation.Validations.ValidatePhoneNumber;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class TelephoneValidator implements ConstraintValidator<Validations.ValidatePhoneNumber, String>{
+public class TelephoneValidator implements ConstraintValidator<ValidatePhoneNumber, String>{
 
   @Override
-  public void initialize(Validations.ValidatePhoneNumber validatePhoneNumber){
+  public void initialize(ValidatePhoneNumber validatePhoneNumber){
 
   }
 

@@ -2,7 +2,7 @@ package danny.project.example.form.course;
 
 import danny.project.example.form.Enums.ColumnStatus;
 import danny.project.example.form.topic.Topic;
-import danny.project.example.form.validation.Validations;
+import danny.project.example.form.validation.Validations.ValidatePhoneNumber;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
@@ -57,10 +57,10 @@ public class Course {
   private Timestamp updatedDatetime;
 
   @Column(name = "course_phone_number", nullable = false)
-  @Validations.ValidatePhoneNumber
+  @ValidatePhoneNumber
   private String coursePhoneNumber;
 
-  public Course() {};
+  public Course() {}
 
   public Course(Integer id, String courseName, String courseDescription, Topic topic, ColumnStatus status, Date courseDate, Timestamp updatedDatetime, String coursePhoneNumber) {
     this.id = id;

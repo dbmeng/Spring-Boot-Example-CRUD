@@ -7,6 +7,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
@@ -59,6 +63,9 @@ public class Course {
   @Column(name = "course_phone_number", nullable = false)
   @ValidatePhoneNumber
   private String coursePhoneNumber;
+
+  @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+  private List<CourseFile> courseFile;
 
   public Course() {}
 
@@ -133,5 +140,11 @@ public class Course {
 
   public void setCoursePhoneNumber(String coursePhoneNumber) {
     this.coursePhoneNumber = coursePhoneNumber;
+  }
+
+  public List<CourseFile> getCurrentCourseFileForCourse(){
+    return courseFile.stream()
+        .filter(courseFile -> courseFile.status == ColumnStatus.CURRENT)
+        .collect(Collectors.toList());
   }
 }

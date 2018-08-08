@@ -3,7 +3,7 @@
   <head th:replace="layout/header::head"></head>
   <body>
   <th:block th:include="layout/navbar"/>
-    <form action="#" th:action="${'/topics/' + topicId + '/courses/' + course.id + '/edit/'}" th:object="${course}" method="post">
+    <form action="#" th:action="${'/topics/' + topicId + '/courses/' + course.id + '/edit/'}" th:object="${course}" method="post" enctype="multipart/form-data">
       <div class="container">
         <div class="form-row">
           <div class="form-group col-md-6">
@@ -32,6 +32,22 @@
             <input type="text" th:class="${#fields.hasErrors('coursePhoneNumber')} ? 'form-control is-invalid col-md-6' : 'form-control col-md-6'" id="coursePhoneNumberLabel" th:field="*{coursePhoneNumber}">
             <small class="form-text text-muted">Enter a phone number customers can contact for course information</small>
             <span th:if="${#fields.hasErrors('coursePhoneNumber')}" th:errors="*{coursePhoneNumber}" class="invalid-feedback">Course Phone Number Error</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6" th:if="${courseFileExists != true}">
+            <label for="courseFileNewLabel">Course Material</label>
+            <input type="file" name="courseFileUpload" id="courseFileNewLabel" class="form-control col-md-12"/>
+          </div>
+          <div class="form-group col-md-6" th:if="${courseFileExists==true}">
+            <div>
+              <div th:each="courseMaterial : ${course.getCurrentCourseFileForCourse()}">
+                <label for="courseFileExistsLabel">Course Material</label>
+                <br/>
+                <input type="submit" th:value="${courseMaterial.getFileName()}" id="courseFileExistsLabel" class="btn btn-link" name="downloadFile">
+                <input type="submit" value="Remove file" class="btn btn-danger" name="removeFile">
+              </div>
+            </div>
           </div>
         </div>
         <button type="submit" class="btn btn-primary" name="submit">Submit</button>
